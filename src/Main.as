@@ -318,6 +318,39 @@ bool WaypointDistLess(const WaypointInfo@ const &in a, const WaypointInfo@ const
     return a.dist < b.dist;
 }
 
+void SortCPsByGhostOrder() {
+    auto ghostCpSeq = GetCpSequenceFromGhosts();
+    for (uint i = 0; i < ghostCpSeq.Length; i++) {
+        auto cpIx = ghostCpSeq[i];
+#if DEV
+        // trace("Ghost CP: " + cpIx + " taken nth: " + i);
+#endif
+        auto wp = MoveWaypointSortByIndex(cpIx, i);
+        if (wp !is null) {
+            string l = "#" + (i + 1);
+            if (!wp.label.Contains(l)) {
+                wp.label = l + " " + wp.label;
+            }
+        }
+    }
+    // todo: group linked cps?
+}
+
+WaypointInfo@ MoveWaypointSortByIndex(uint cpIx, uint to) {
+    for (uint i = 0; i < waypoints.Length; i++) {
+        if (waypoints[i].index == cpIx) {
+            auto @wp = waypoints[i];
+            auto @tmp = waypoints[to];
+            @waypoints[to] = wp;
+            @waypoints[i] = tmp;
+            return wp;
+        }
+    }
+    return null;
+}
+
+
+
 /** Render function called every frame.
 */
 void RenderInterface() {
@@ -352,10 +385,15 @@ void RenderInterface() {
             UI::SameLine();
             g_FreeCamControl.m_TargetIsEnabled = UI::Checkbox("Use Target Mode (like editor)", g_FreeCamControl.m_TargetIsEnabled);
         }
-
         if (UI::Button("Sort CPs by Distance")) {
             SortCPsByDistance();
         }
+#if DEPENDENCY_GHOSTS_PP
+        UI::SameLine();
+        if (UI::Button("Sort CPs by Ghost order")) {
+            SortCPsByGhostOrder();
+        }
+#endif
         UI::SameLine();
         UI::BeginDisabled(!g_IsInFreeCam);
         if (UI::Button("View Car")) {

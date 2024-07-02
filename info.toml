@@ -7,3 +7,4 @@ version  = "0.2.4"
 [script]
 #__DEFINES__
 dependencies = ["VehicleState", "Camera"]
+optional_dependencies = ["ghosts-pp"]
