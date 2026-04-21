@@ -372,7 +372,7 @@ void RenderInterface() {
     }
 
     vec2 size = vec2(550, 300);
-    vec2 pos = (vec2(Draw::GetWidth(), Draw::GetHeight()) - size) / 2.;
+    vec2 pos = (vec2(Display::GetSize()) - size) / 2.;
     UI::SetNextWindowSize(int(size.x), int(size.y), UI::Cond::FirstUseEver);
     UI::SetNextWindowPos(int(pos.x), int(pos.y), UI::Cond::FirstUseEver);
     UI::PushStyleColor(UI::Col::FrameBg, vec4(.2, .2, .2, .5));
