@@ -1,6 +1,7 @@
 bool GameVersionSafe = false;
 bool KnownSafe = false;
 const string[] KnownSafeVersions = {
+    "2026-07-22_18_27",
     "2026-02-02_17_51",
     "2024-06-28_13_46",
     "2024-04-30_16_52",
