@@ -10,8 +10,7 @@ bool ShowWindow = false;
 
 /** Render function called every frame intended only for menu items in `UI`. */
 void RenderMenu() {
-    if (!GameVersionSafe) return;
-    if (UI::MenuItem(MenuTitle, "", ShowWindow)) {
+    if (UI::MenuItem(MenuTitle, "", ShowWindow, GameVersionSafe)) {
         ShowWindow = !ShowWindow;
     }
 }
